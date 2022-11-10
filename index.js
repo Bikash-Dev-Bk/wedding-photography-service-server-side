@@ -19,6 +19,7 @@ async function run() {
   try {
       const serviceCollection = client.db('weddingPhotography').collection('services');
       const teamCollection = client.db('weddingPhotography').collection('team');
+      const photoGalleryCollection = client.db('weddingPhotography').collection('gallery');
        
       app.get('/services', async (req, res) => {
           const query = {}
@@ -32,6 +33,14 @@ async function run() {
           const cursor = teamCollection.find(query);
           const team = await cursor.toArray();
           res.send(team);
+      });
+
+
+      app.get('/gallery', async (req, res) => {
+          const query = {}
+          const cursor = photoGalleryCollection.find(query);
+          const photoGallery = await cursor.toArray();
+          res.send(photoGallery);
       });
 
       app.get('/services/:id', async (req, res) => {
