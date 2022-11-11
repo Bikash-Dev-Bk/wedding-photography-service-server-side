@@ -28,6 +28,14 @@ async function run() {
           res.send(services);
       });
 
+      app.post('/services', async (req, res) => {
+        const service = req.body;
+        const result = await serviceCollection.insertOne(service);
+        console.log(result);
+        service._id = result.insertedId;
+        res.send(service);
+      });
+
       app.get('/team', async (req, res) => {
           const query = {}
           const cursor = teamCollection.find(query);
