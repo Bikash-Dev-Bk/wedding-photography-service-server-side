@@ -66,11 +66,20 @@ async function run() {
       res.send(reviews);
     });
 
-    app.get('/reviews/:id', async (req, res) => {
+    app.get('/reviews/update/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const user = await reviewCollection.findOne(query);
       res.send(user);
+  })
+
+    app.get('/reviews/:useremail', async (req, res) => {
+      const useremail = req.params.useremail;
+      const query = { userEmail: useremail };
+
+      const cursor = reviewCollection.find(query);
+      const reviews = await cursor.toArray();
+      res.send(reviews);
   })
 
     app.post("/reviews", async (req, res) => {
